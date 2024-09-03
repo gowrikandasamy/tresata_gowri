@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "tresata-app"
+    bucket = "tresata-demo"
     region = "us-east-1"
     key = "jenkins-server/terraform.tfstate"
   }
