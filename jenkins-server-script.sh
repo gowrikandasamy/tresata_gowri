@@ -1,19 +1,33 @@
 #!/bin/bash
 
-# install jenkins
+# install Java : https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
 
-sudo yum update
-sudo wget -O /etc/yum.repos.d/jenkins.repo \
-    https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-sudo yum upgrade -y
-sudo amazon-linux-extras install java-openjdk11 -y
-sudo yum install jenkins -y
+sudo apt update
+
+sudo apt install fontconfig openjdk-17-jre
+
+# install jenkins: https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+  
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+  
+sudo apt-get update
+
+sudo apt-get install jenkins
+
 sudo systemctl enable jenkins
+
 sudo systemctl start jenkins
 
 # install git
-sudo yum install git -y
+
+suod apt update
+
+sudo apt install git -y
 
 # install terraform on Ubuntu: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
 
@@ -36,12 +50,18 @@ sudo apt update
 sudo apt-get install terraform
 
 
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-sudo yum -y install terraform
+# install kubectl : https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
-# install kubectl
+sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
-sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl
-sudo chmod +x ./kubectl
-sudo mkdir -p $HOME/bin && sudo cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# AWS CLI : https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+sudo apt-get install zip
+
+sudo unzip awscliv2.zip
+
+sudo sudo ./aws/install
