@@ -1,4 +1,4 @@
-data "aws_ami" "latest-amazon-linux-image" {
+data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["amazon"]
   filter {
@@ -12,7 +12,7 @@ data "aws_ami" "latest-amazon-linux-image" {
 }
 
 resource "aws_instance" "jenkins" {
-  ami                         = data.aws_ami.latest-amazon-linux-image.id
+  ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   key_name                    = "jenkins-server"
   subnet_id                   = aws_subnet.myapp-subnet-1.id
