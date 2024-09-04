@@ -1,4 +1,4 @@
-Automation: Jenkins server setup
+Jenkins server setup
 CI:
 1. Deploy EC2
 2. Install JDK, Jenkins, Terraform, AWS CLI, Kubuctl, git
